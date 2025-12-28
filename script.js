@@ -1,51 +1,49 @@
-const chatForm = document.querySelector("#chat-form");
-const chatMessages = document.querySelector("#chat-messages");
+const form = document.getElementById("prompt-form");
+const input = document.getElementById("prompt-input");
+const output = document.getElementById("output");
+const submitBtn = document.getElementById("submit-btn");
 
-// Handle form submit
-chatForm.addEventListener("submit", async (e) => {
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const userInput = document.querySelector("#user-input").value;
-  if (!userInput) return;
 
-  // Show user message
-  addMessage(userInput, "user-message");
-  document.querySelector("#user-input").value = "";
+  const prompt = input.value.trim();
+  if (!prompt) return;
 
-  // Show AI placeholder while generating
-  const aiMsg = addMessage("Generating...", "ai-message");
+  // Show loading state
+  output.textContent = "Generating... ⏳";
+  submitBtn.disabled = true;
 
   try {
     const res = await fetch("/api/generate", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt: userInput }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prompt }),
     });
 
-    const data = await res.json();
-    aiMsg.textContent = data.response || "No response from AI";
+    // Try parsing JSON safely
+    let data;
+    try {
+      data = await res.json();
+    } catch (err) {
+      console.error("Failed to parse JSON from backend:", err);
+      output.textContent = "Error: Invalid response from server.";
+      return;
+    }
+
+    if (!res.ok) {
+      output.textContent = data.response || "Error generating text.";
+      return;
+    }
+
+    // Show the AI generated text
+    output.textContent = data.response || "AI returned no text.";
+
   } catch (err) {
-    console.error(err);
-    aiMsg.textContent = "Error: Could not get response from AI";
+    console.error("Error calling backend:", err);
+    output.textContent = "Error: Could not contact AI.";
+  } finally {
+    submitBtn.disabled = false;
   }
-});
-
-// Function to add messages to chat
-function addMessage(text, className) {
-  const div = document.createElement("div");
-  div.className = "message " + className;
-  div.textContent = text;
-  chatMessages.appendChild(div);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-  return div; // return for updating placeholder text
-}
-
-// Sidebar buttons (optional)
-document.querySelector("#new-chat")?.addEventListener("click", () => {
-  chatMessages.innerHTML = "";
-});
-document.querySelector("#services-btn")?.addEventListener("click", () => {
-  alert("Select a service from the right sidebar!");
-});
-document.querySelector("#login-btn")?.addEventListener("click", () => {
-  alert("Login feature coming soon!");
 });
