@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Novexa</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NiveraGPT</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Welcome to Novexa</h1>
-  <p>Your personal AI platform for stories and creative tools.</p>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>NiveraGPT</h2>
+      <button id="new-chat">+ New Chat</button>
+      <button id="services-btn">More Services</button>
+      <button id="login-btn">Login</button>
+    </aside>
+
+    <!-- Main chat area -->
+    <main class="chat-area">
+      <div id="chat-messages"></div>
+      <form id="chat-form">
+        <input type="text" id="user-input" placeholder="Type your prompt here..." required>
+        <button type="submit">Send</button>
+      </form>
+    </main>
+
+    <!-- Right sidebar for options (services, settings) -->
+    <aside class="right-sidebar">
+      <h3>Options</h3>
+      <ul>
+        <li id="story-service">Story / Book Generator</li>
+        <li id="image-service">AI Image Generator</li>
+        <li id="transition-service">Transitions / Animations</li>
+      </ul>
+    </aside>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
