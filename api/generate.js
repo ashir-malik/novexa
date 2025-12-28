@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(
-      "https://router.huggingface.co/models/gpt2",
+      "https://api-inference.huggingface.co/models/gpt2",
       {
         method: "POST",
         headers: {
