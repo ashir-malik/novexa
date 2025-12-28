@@ -1,18 +1,16 @@
 import fetch from "node-fetch";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
+  if (req.method !== "POST")
     return res.status(405).json({ error: "Method not allowed" });
-  }
 
   const { prompt } = req.body;
-  if (!prompt) {
+  if (!prompt)
     return res.status(400).json({ error: "Prompt is required" });
-  }
 
   try {
     const response = await fetch(
-      "https://api-inference.huggingface.co/models/gpt2",
+      "https://api-inference.huggingface.co/models/openai-community/gpt2",
       {
         method: "POST",
         headers: {
@@ -28,20 +26,12 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    // Check for Hugging Face errors
-    if (data.error) {
-      console.error("Hugging Face API error:", data.error);
+    if (data.error)
       return res.status(500).json({ response: "Error generating text" });
-    }
-
-    // Make sure GPT-2 output exists
-    if (!data[0] || !data[0].generated_text) {
-      return res.status(500).json({ response: "No text returned" });
-    }
 
     res.status(200).json({ response: data[0].generated_text });
   } catch (err) {
-    console.error("Backend error:", err);
+    console.error(err);
     res.status(500).json({ response: "Error generating text" });
   }
 }
