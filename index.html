@@ -1,39 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NiveraGPT</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <div class="container">
+
     <!-- Left Sidebar -->
     <aside class="sidebar">
       <h2>NiveraGPT</h2>
-      <button id="new-chat">+ New Chat</button>
-      <button id="services-btn">More Services</button>
-      <button id="login-btn">Login</button>
+      <button>+ New Chat</button>
+      <button>More Services</button>
+      <button>Login</button>
     </aside>
 
     <!-- Main Chat Area -->
     <main class="chat-area">
+
+      <!-- Chat messages -->
       <div id="chat-messages"></div>
+
+      <!-- Prompt form -->
       <form id="chat-form">
-        <input type="text" id="user-input" placeholder="Type your prompt here..." required>
-        <button type="submit">Send</button>
+        <input
+          type="text"
+          id="prompt-input"
+          placeholder="Type your prompt here..."
+          required
+        />
+        <button type="submit" id="submit-btn">Send</button>
       </form>
+
     </main>
 
     <!-- Right Sidebar -->
     <aside class="right-sidebar">
       <h3>Services</h3>
       <ul>
-        <li id="story-service">Story / Book Generator</li>
-        <li id="image-service">AI Image Generator</li>
-        <li id="transition-service">Transitions / Animations</li>
+        <li>Story / Book Generator</li>
+        <li>AI Image Generator</li>
+        <li>Transitions / Animations</li>
       </ul>
     </aside>
+
   </div>
 
   <script src="script.js"></script>
