@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(
-      "https://router.huggingface.co/models/gpt2",
+      "https://router.huggingface.co/models/LFM2-2.6B-Exp",
       {
         method: "POST",
         headers: {
